@@ -1,33 +1,33 @@
-import { Hono } from 'hono'
+import { Hono } from "hono";
+import { serveStatic } from "hono/deno";
 
-const app = new Hono()
+const app = new Hono();
 
-const routes = app.get('/api/clock', (c) => {
+const routes = app.get("/api/clock", (c) => {
   return c.json({
-    time: new Date().toLocaleTimeString()
-  })
-})
+    time: new Date().toLocaleTimeString(),
+  });
+});
 
-export type AppType = typeof routes
+export type AppType = typeof routes;
 
-app.get('*', (c) => {
+app.get("/", (c) => {
   return c.html(
     <html>
       <head>
         <meta charSet="utf-8" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
-        {import.meta.env.PROD ? (
-          <script type="module" src="/static/client.js"></script>
-        ) : (
-          <script type="module" src="/src/client.tsx"></script>
-        )}
+        <link
+          rel="stylesheet"
+          href="https://cdn.simplecss.org/simple.min.css"
+        />
+        <script type="module" src="/static/scripts/client.js"></script>
       </head>
       <body>
         <div id="root"></div>
       </body>
-    </html>
-  )
+    </html>,
+  );
 })
-
-export default app
+  .get("/static/*", serveStatic({ root: "./" }));
+export default app;

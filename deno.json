@@ -1,0 +1,15 @@
+{
+  "imports": {
+    "hono": "jsr:@hono/hono@^4.6.1"
+  },
+  "tasks": {
+    "install": "deno run -A --unstable npm:hono",
+    "start": "deno run watch-client & deno serve -A ./src/index.tsx",
+    "watch-client": "deno run -A --unstable npm:vite build -w -c ./vite.config.clinet.ts",
+    "build-client": "deno run -A --unstable npm:vite build -c ./vite.config.clinet.ts"
+  },
+  "compilerOptions": {
+    "jsx": "precompile",
+    "jsxImportSource": "hono/jsx"
+  }
+}
